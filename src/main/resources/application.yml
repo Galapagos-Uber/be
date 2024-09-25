@@ -1,0 +1,54 @@
+logging:
+  level:
+    ROOT: INFO
+    org.springframework.cache: TRACE
+    com.capstone.galapagosUber: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  com:
+    fasterxml:
+      jackson: DEBUG
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include:
+          [
+            "configprops",
+            "env",
+            "health",
+            "info",
+            "logfile",
+            "loggers",
+            "prometheus",
+            "threaddump",
+            "caches",
+          ]
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/galapagos_uber
+    username: postgres
+    password: Abc123456
+    driverClassName: org.postgresql.Driver
+
+  flyway:
+    baselineOnMigrate: true
+    enabled: true
+    locations: classpath:db/migration
+
+  config:
+    import: optional:file:.env[.properties]
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect

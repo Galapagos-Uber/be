@@ -1,0 +1,798 @@
+openapi: 3.0.1
+info:
+  title: Galapagos Uber API
+  description: API documentation for the Galapagos Uber application
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+
+paths:
+  /actuator/health:
+    get:
+      description: Get health status of backend service
+      operationId: actuatorHealth
+      security: []
+      tags:
+        - "actuator"
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponseDto"
+  /actuator/info:
+    get:
+      description: Get information about ai-assistance service
+      operationId: actuatorInfo
+      tags:
+        - actuator
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InformationGetResponse"
+  /drivers:
+    get:
+      summary: Get a list of drivers
+      tags:
+        - drivers
+      responses:
+        '200':
+          description: A list of drivers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DriverResponseDto'
+    post:
+      summary: Create a new driver
+      tags:
+        - drivers
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDriverRequestDto'
+      responses:
+        '201':
+          description: Driver created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DriverResponseDto'
+
+  /drivers/{id}:
+    get:
+      summary: Get a driver by ID
+      tags:
+        - drivers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A single driver
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DriverResponseDto'
+        '404':
+          description: Driver not found
+    put:
+      summary: Update a driver
+      tags:
+        - drivers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDriverRequestDto'
+      responses:
+        '200':
+          description: Driver updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DriverResponseDto'
+    delete:
+      summary: Delete a driver
+      tags:
+        - drivers
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Driver deleted
+
+  /riders:
+    get:
+      summary: Get a list of riders
+      tags:
+        - riders
+      responses:
+        '200':
+          description: A list of riders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RiderResponseDto'
+    post:
+      summary: Create a new rider
+      tags:
+        - riders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRiderRequestDto'
+      responses:
+        '201':
+          description: Rider created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiderResponseDto'
+
+  /riders/{id}:
+    get:
+      summary: Get a rider by ID
+      tags:
+        - riders
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A single rider
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiderResponseDto'
+        '404':
+          description: Rider not found
+    put:
+      summary: Update a rider
+      tags:
+        - riders
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRiderRequestDto'
+      responses:
+        '200':
+          description: Rider updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RiderResponseDto'
+    delete:
+      summary: Delete a rider
+      tags:
+        - riders
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Rider deleted
+
+  /rides:
+    get:
+      summary: Get a list of rides
+      tags:
+        - rides
+      responses:
+        '200':
+          description: A list of rides
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RideResponseDto'
+    post:
+      summary: Create a new ride
+      tags:
+        - rides
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRideRequestDto'
+      responses:
+        '201':
+          description: Ride created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RideResponseDto'
+
+  /rides/{id}:
+    get:
+      summary: Get a ride by ID
+      tags:
+        - rides
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A single ride
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RideResponseDto'
+        '404':
+          description: Ride not found
+    put:
+      summary: Update a ride
+      tags:
+        - rides
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRideRequestDto'
+      responses:
+        '200':
+          description: Ride updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RideResponseDto'
+    delete:
+      summary: Delete a ride
+      tags:
+        - rides
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Ride deleted
+
+  /vehicles:
+    get:
+      summary: Get a list of vehicles
+      tags:
+        - vehicles
+      responses:
+        '200':
+          description: A list of vehicles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VehicleResponseDto'
+    post:
+      summary: Add a new vehicle
+      tags:
+        - vehicles
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateVehicleRequestDto'
+      responses:
+        '201':
+          description: Vehicle added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleResponseDto'
+
+  /vehicles/{id}:
+    get:
+      summary: Get a vehicle by ID
+      tags:
+        - vehicles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A single vehicle
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleResponseDto'
+        '404':
+          description: Vehicle not found
+    put:
+      summary: Update a vehicle
+      tags:
+        - vehicles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateVehicleRequestDto'
+      responses:
+        '200':
+          description: Vehicle updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VehicleResponseDto'
+    delete:
+      summary: Delete a vehicle
+      tags:
+        - vehicles
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Vehicle deleted
+
+components:
+  schemas:
+    HealthResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+    InformationGetResponse:
+      type: object
+      properties:
+        version:
+          type: string
+        releaseDate:
+          type: string
+          format: date-time
+    CreateDriverRequestDto:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        phoneNumber:
+          type: string
+        dob:
+          type: string
+        gender:
+          type: string
+          enum:
+            - Male
+            - Female
+            - Others
+        avatarResourcePath:
+          type: string
+        password:
+          type: string
+          format: password
+        isActive:
+          type: string
+        licenseNumber:
+          type: string
+        vehicleDetails:
+          $ref: '#/components/schemas/CreateVehicleRequestDto'
+      required:
+        - firstName
+        - lastName
+        - email
+        - password
+        - licenseNumber
+
+    UpdateDriverRequestDto:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        phoneNumber:
+          type: string
+        dob:
+          type: string
+        gender:
+          type: string
+          enum:
+            - Male
+            - Female
+            - Others
+        avatarResourcePath:
+          type: string
+        password:
+          type: string
+          format: password
+        isActive:
+          type: string
+        licenseNumber:
+          type: string
+        vehicleDetails:
+          $ref: '#/components/schemas/UpdateVehicleRequestDto'
+
+    DriverResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        phoneNumber:
+          type: string
+        dob:
+          type: string
+        gender:
+          type: string
+          enum:
+            - Male
+            - Female
+            - Others
+        avatarResourcePath:
+          type: string
+        isActive:
+          type: string
+        licenseNumber:
+          type: string
+        vehicleDetails:
+          $ref: '#/components/schemas/VehicleResponseDto'
+        createdDate:
+          type: string
+          format: date-time
+        lastModifiedDate:
+          type: string
+          format: date-time
+
+    CreateRiderRequestDto:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        phoneNumber:
+          type: string
+        dob:
+          type: string
+        gender:
+          type: string
+          enum:
+            - Male
+            - Female
+            - Others
+        avatarResourcePath:
+          type: string
+        password:
+          type: string
+          format: password
+        isActive:
+          type: string
+        preferredPaymentMethod:
+          type: string
+          enum:
+            - Credit Card
+            - PayPal
+            - Cash
+      required:
+        - firstName
+        - lastName
+        - email
+        - password
+
+    UpdateRiderRequestDto:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        phoneNumber:
+          type: string
+        dob:
+          type: string
+        gender:
+          type: string
+          enum:
+            - Male
+            - Female
+            - Others
+        avatarResourcePath:
+          type: string
+        password:
+          type: string
+          format: password
+        isActive:
+          type: string
+        preferredPaymentMethod:
+          type: string
+          enum:
+            - Credit Card
+            - PayPal
+            - Cash
+
+    RiderResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        phoneNumber:
+          type: string
+        dob:
+          type: string
+        gender:
+          type: string
+          enum:
+            - Male
+            - Female
+            - Others
+        avatarResourcePath:
+          type: string
+        isActive:
+          type: string
+        preferredPaymentMethod:
+          type: string
+          enum:
+            - Credit Card
+            - PayPal
+            - Cash
+        createdDate:
+          type: string
+          format: date-time
+        lastModifiedDate:
+          type: string
+          format: date-time
+
+    CreateVehicleRequestDto:
+      type: object
+      properties:
+        make:
+          type: string
+        model:
+          type: string
+        year:
+          type: integer
+        licensePlate:
+          type: string
+        color:
+          type: string
+        carType:
+          type: string
+      required:
+        - make
+        - model
+        - licensePlate
+
+    UpdateVehicleRequestDto:
+      type: object
+      properties:
+        make:
+          type: string
+        model:
+          type: string
+        year:
+          type: integer
+        licensePlate:
+          type: string
+        color:
+          type: string
+        carType:
+          type: string
+
+    VehicleResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        make:
+          type: string
+        model:
+          type: string
+        year:
+          type: integer
+        licensePlate:
+          type: string
+        color:
+          type: string
+        carType:
+          type: string
+        createdDate:
+          type: string
+          format: date-time
+        lastModifiedDate:
+          type: string
+          format: date-time
+
+    CreateRideRequestDto:
+      type: object
+      properties:
+        riderId:
+          type: string
+          format: uuid
+        startLocation:
+          type: string
+        endLocation:
+          type: string
+      required:
+        - riderId
+        - startLocation
+        - endLocation
+
+    UpdateRideRequestDto:
+      type: object
+      properties:
+        driverId:
+          type: string
+          format: uuid
+        vehicleId:
+          type: string
+          format: uuid
+        pickupTime:
+          type: string
+          format: date-time
+        dropoffTime:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum:
+            - Requested
+            - Dispatched
+            - In Transit
+            - Completed
+            - Cancelled
+
+    RideResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        rider:
+          $ref: '#/components/schemas/RiderResponseDto'
+        driver:
+          $ref: '#/components/schemas/DriverResponseDto'
+        vehicle:
+          $ref: '#/components/schemas/VehicleResponseDto'
+        startLocation:
+          type: string
+        endLocation:
+          type: string
+        pickupTime:
+          type: string
+          format: date-time
+        dropoffTime:
+          type: string
+          format: date-time
+        fare:
+          type: number
+          format: float
+        status:
+          type: string
+          enum:
+            - Requested
+            - Dispatched
+            - In Transit
+            - Completed
+            - Cancelled
+        createdDate:
+          type: string
+          format: date-time
+        lastModifiedDate:
+          type: string
+          format: date-time
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: drivers
+    description: Endpoints related to drivers
+  - name: riders
+    description: Endpoints related to riders
+  - name: rides
+    description: Endpoints related to rides
+  - name: vehicles
+    description: Endpoints related to vehicles
