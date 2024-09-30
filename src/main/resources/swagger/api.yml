@@ -453,7 +453,7 @@ components:
         - lastName
         - email
         - password
-        - licenseNumber
+        - licenseNumber   
 
     UpdateDriverRequestDto:
       type: object

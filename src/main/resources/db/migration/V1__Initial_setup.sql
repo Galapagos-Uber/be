@@ -1,8 +1,8 @@
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
-CREATE TYPE IF NOT EXISTS ride_status AS ENUM ('REQUESTED', 'DISPATCHED', 'IN_TRANSIT', 'COMPLETED', 'CANCELLED');
-CREATE TYPE IF NOT EXISTS gender AS ENUM ('Male', 'Female', 'Others');
-CREATE TYPE IF NOT EXISTS preferred_payment_method AS ENUM ('Credit Card', 'PayPal', 'Cash');
+CREATE TYPE ride_status AS ENUM ('REQUESTED', 'DISPATCHED', 'IN_TRANSIT', 'COMPLETED', 'CANCELLED');
+CREATE TYPE gender AS ENUM ('Male', 'Female', 'Others');
+CREATE TYPE preferred_payment_method AS ENUM ('Credit Card', 'PayPal', 'Cash');
 
 CREATE TABLE IF NOT EXISTS vehicle (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS driver (
     dob VARCHAR(255),
     gender gender,
     avatar_resource_path VARCHAR(255),
-    is_active VARCHAR(255),
+    is_active VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     license_number VARCHAR(255) NOT NULL,
     vehicle_id UUID UNIQUE,
@@ -53,8 +53,8 @@ CREATE TABLE IF NOT EXISTS rider (
 CREATE TABLE IF NOT EXISTS ride (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     rider_id UUID NOT NULL,
-    driver_id UUID NOT NULL,
-    vehicle_id UUID NOT NULL,
+    driver_id UUID,
+    vehicle_id UUID,
     start_location VARCHAR(255) NOT NULL,
     end_location VARCHAR(255) NOT NULL,
     pickup_time TIMESTAMP WITHOUT TIME ZONE,

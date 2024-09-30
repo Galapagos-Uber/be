@@ -23,6 +23,7 @@ public abstract class RiderMapper {
     @Mapping(target = "lastModifiedDate", ignore = true)
     public abstract Rider toRider(CreateRiderRequestDto createRiderRequestDto);
 
+    @Mapping(target = "isActive", ignore = true)
     @Mapping(target = "lastModifiedDate", ignore = true)
     public abstract void partialUpdate(@MappingTarget Rider rider, UpdateRiderRequestDto updateRiderRequestDto);
 }

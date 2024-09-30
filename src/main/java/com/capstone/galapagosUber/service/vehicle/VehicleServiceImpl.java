@@ -1,6 +1,9 @@
 package com.capstone.galapagosUber.service.vehicle;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
 import com.capstone.galapagosUber.repository.VehicleRepository;
 import com.capstone.galapagosUber.domain.entity.Vehicle;
 import com.capstone.galapagosUber.web.rest.errors.EntityNotFoundException;
@@ -19,6 +22,13 @@ public class VehicleServiceImpl implements VehicleService {
 
     private final VehicleRepository vehicleRepository;
     private final VehicleMapper vehicleMapper;
+
+    @Override
+    public List<VehicleResponseDto> getAllVehicles() {
+        return vehicleRepository.findAll().stream()
+                .map(vehicleMapper::toVehicleResponseDto)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public VehicleResponseDto createVehicle(CreateVehicleRequestDto createVehicleRequestDto) {

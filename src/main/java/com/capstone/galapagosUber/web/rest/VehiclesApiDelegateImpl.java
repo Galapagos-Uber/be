@@ -1,8 +1,10 @@
 package com.capstone.galapagosUber.web.rest;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.openapi.gen.springboot.dto.CreateVehicleRequestDto;
+import com.openapi.gen.springboot.dto.DriverResponseDto;
 import com.openapi.gen.springboot.dto.UpdateVehicleRequestDto;
 import com.openapi.gen.springboot.dto.VehicleResponseDto;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,12 @@ import lombok.RequiredArgsConstructor;
 public class VehiclesApiDelegateImpl implements VehiclesApiDelegate {
 
     private final VehicleService vehicleService;
+
+    @Override
+    public ResponseEntity<List<VehicleResponseDto>> vehiclesGet() {
+        List<VehicleResponseDto> vehicles = vehicleService.getAllVehicles();
+        return ResponseEntity.ok(vehicles);
+    }
 
     @Override
     public ResponseEntity<VehicleResponseDto> vehiclesIdGet(UUID vehicleId) {

@@ -34,10 +34,7 @@ public class DriverServiceImpl implements DriverService {
         Driver driver = driverMapper.toDriver(createDriverRequestDto);
 
         driver.setPassword(createDriverRequestDto.getPassword());
-
-        Vehicle vehicle = vehicleMapper.toVehicle(createDriverRequestDto.getVehicleDetails());
-        vehicleRepository.save(vehicle);
-        driver.setVehicle(vehicle);
+        driver.setIsActive("True");
 
         driverRepository.save(driver);
         return driverMapper.toDriverResponseDto(driver);
@@ -70,7 +67,6 @@ public class DriverServiceImpl implements DriverService {
                 .orElseThrow(() -> new EntityNotFoundException("Driver not found with id: " + id));
         driverMapper.partialUpdate(driver, updateDriverRequestDto);
 
-        // Handle vehicle updates if provided
         if (updateDriverRequestDto.getVehicleDetails() != null) {
             Vehicle vehicle = driver.getVehicle();
             if (vehicle == null) {

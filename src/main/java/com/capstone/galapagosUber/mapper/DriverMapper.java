@@ -24,6 +24,7 @@ public abstract class DriverMapper {
     public abstract Driver toDriver(CreateDriverRequestDto createDriverRequestDto);
 
     @Mapping(target = "vehicle", source = "vehicleDetails")
+    @Mapping(target = "isActive", ignore = true)
     @Mapping(target = "lastModifiedDate", ignore = true)
     public abstract void partialUpdate(@MappingTarget Driver driver, UpdateDriverRequestDto updateDriverRequestDto);
 }

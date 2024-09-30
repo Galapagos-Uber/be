@@ -1,11 +1,13 @@
 package com.capstone.galapagosUber.service.ride;
 
+import java.util.List;
 import java.util.UUID;
 import com.openapi.gen.springboot.dto.CreateRideRequestDto;
 import com.openapi.gen.springboot.dto.RideResponseDto;
 import com.openapi.gen.springboot.dto.UpdateRideRequestDto;
 
 public interface RideService {
+    List<RideResponseDto> getAllRides();
 
     RideResponseDto createRide(CreateRideRequestDto createRideRequestDto);
 

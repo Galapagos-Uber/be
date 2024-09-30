@@ -27,7 +27,7 @@ public class RiderServiceImpl implements RiderService {
     @Override
     public RiderResponseDto createRider(CreateRiderRequestDto createRiderRequestDto) {
         Rider rider = riderMapper.toRider(createRiderRequestDto);
-
+        rider.setIsActive("True");
         rider.setPassword(createRiderRequestDto.getPassword());
 
         riderRepository.save(rider);
