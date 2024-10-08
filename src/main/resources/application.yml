@@ -31,10 +31,20 @@ management:
           ]
 
 spring:
+  application:
+    cors:
+      allowed-origins: "http://localhost:8081"
+      allowed-methods: "GET,POST,PUT,DELETE,OPTIONS"
+      allowed-headers: "*"
+      allow-credentials: true
+
   datasource:
-    url: jdbc:postgresql://localhost:5432/galapagos_uber
-    username: postgres
-    password: Abc123456
+#    url: jdbc:postgresql://localhost:5432/galapagos_uber
+#    username: postgres
+#    password: Abc123456
+    url: jdbc:postgresql://central.c5iqkoyc6wn0.us-east-2.rds.amazonaws.com:5432/galapagos_uber
+    username: Dimness9135
+    password: 2$c%!1*POkRd29rWNLHy
     driverClassName: org.postgresql.Driver
 
   flyway:
@@ -52,3 +62,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+jwt:
+  secret: "MIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEA4ty/6NviFXYPz8/wBjQaQJmrNEoK2Y5O+LcTLab+s17Mb4vPbX9IxezwaPtzsvJGd3ZMgCfNmL8uJ6n4Ujn4BwIDAQABAkBhcn9A0AqaO19pXaF1mLXaH+gJivCEKPvFHCaxynTHqNaMochLZr00IqimkdaFVqZm3rL6l+D1NleYnk7BUXlpAiEA/YbUhNSli6udz9+cpCCtWHUZiL6HEJUqvQSUwJYbS20CIQDlE1ObDGMdCy2gnvRilJPZJK53AtBLQjTLgK1j5dcUwwIhANpR5WiNhhGEs91yfn2H9j6aeGadS8on6injbAV8PfzxAiEA2Y7rXlv7XcAaC2wrqdx2NkpyL7FKZc9xGL0S78d/58UCIBpNSgiyB8q9cXO7MdEG/+fsEaaPFJv4RIjLIuliaj90"
+  expirationMs: 86400000

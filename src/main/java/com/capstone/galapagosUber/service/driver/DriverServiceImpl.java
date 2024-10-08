@@ -16,6 +16,8 @@ import com.openapi.gen.springboot.dto.UpdateDriverRequestDto;
 import com.openapi.gen.springboot.dto.DriverResponseDto;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.compress.PasswordRequiredException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,12 +30,13 @@ public class DriverServiceImpl implements DriverService {
     private final VehicleRepository vehicleRepository;
     private final DriverMapper driverMapper;
     private final VehicleMapper vehicleMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public DriverResponseDto createDriver(CreateDriverRequestDto createDriverRequestDto) {
         Driver driver = driverMapper.toDriver(createDriverRequestDto);
-
-        driver.setPassword(createDriverRequestDto.getPassword());
+        String hashedPassword = passwordEncoder.encode(createDriverRequestDto.getPassword());
+        driver.setPassword(hashedPassword);
         driver.setIsActive("True");
 
         driverRepository.save(driver);

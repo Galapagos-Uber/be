@@ -13,6 +13,7 @@ import com.openapi.gen.springboot.dto.UpdateRiderRequestDto;
 import com.openapi.gen.springboot.dto.RiderResponseDto;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,12 +24,14 @@ public class RiderServiceImpl implements RiderService {
 
     private final RiderRepository riderRepository;
     private final RiderMapper riderMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public RiderResponseDto createRider(CreateRiderRequestDto createRiderRequestDto) {
         Rider rider = riderMapper.toRider(createRiderRequestDto);
+        String hashedPassword = passwordEncoder.encode(createRiderRequestDto.getPassword());
+        rider.setPassword(hashedPassword);
         rider.setIsActive("True");
-        rider.setPassword(createRiderRequestDto.getPassword());
 
         riderRepository.save(rider);
         return riderMapper.toRiderResponseDto(rider);

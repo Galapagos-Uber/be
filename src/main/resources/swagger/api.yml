@@ -34,6 +34,24 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/InformationGetResponse"
+  /auth/signIn:
+    post:
+      tags:
+        - auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignInRequestDto'
+      responses:
+        '201':
+          description: User authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JwtResponseDto'
+
   /drivers:
     get:
       summary: Get a list of drivers
@@ -417,6 +435,22 @@ components:
         releaseDate:
           type: string
           format: date-time
+    SignInRequestDto:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - email
+        - password
+    JwtResponseDto:
+      type: object
+      properties:
+        accessToken:
+          type: string
+
     CreateDriverRequestDto:
       type: object
       properties:
