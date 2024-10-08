@@ -46,9 +46,8 @@ public class RideServiceImpl implements RideService {
         UUID riderId = UUID.fromString(String.valueOf(createRideRequestDto.getRiderId()));
         Rider rider = riderRepository.findById(riderId)
                 .orElseThrow(() -> new BadRequestException("Rider not found with id " + riderId));
-
         Ride ride = rideMapper.toRide(createRideRequestDto);
-        ride.setStatus(RideStatus.valueOf("Requested"));
+        ride.setStatus(RideStatus.valueOf("REQUESTED"));
         ride.setRider(rider);
         return rideMapper.toRideResponseDto(rideRepository.save(ride));
     }
@@ -86,12 +85,7 @@ public class RideServiceImpl implements RideService {
         }
 
 //        if (updateRideRequestDto.getVehicleId() != null) {
-//            UUID vehicleId;
-//            try {
-//                vehicleId = updateRideRequestDto.getVehicleId();
-//            } catch (IllegalArgumentException e) {
-//                throw new BadRequestException("Invalid vehicleId format: " + updateRideRequestDto.getVehicleId());
-//            }
+//            UUID vehicleId = updateRideRequestDto.getVehicleId();
 //
 //            Vehicle vehicle = vehicleRepository.findById(vehicleId)
 //                    .orElseThrow(() -> new BadRequestException("Vehicle not found with id: " + vehicleId));
@@ -102,4 +96,25 @@ public class RideServiceImpl implements RideService {
         rideRepository.save(ride);
         return rideMapper.toRideResponseDto(ride);
     }
+
+    @Override
+    public List<RideResponseDto> getRidesByRiderId(UUID riderId) {
+        Rider rider = riderRepository.findById(riderId)
+                .orElseThrow(() -> new EntityNotFoundException("Rider not found with id: " + riderId));
+
+        return rideRepository.findByRider(rider).stream()
+                .map(rideMapper::toRideResponseDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RideResponseDto> getRidesByDriverId(UUID driverId) {
+        Driver driver = driverRepository.findById(driverId)
+                .orElseThrow(() -> new EntityNotFoundException("Driver not found with id: " + driverId));
+
+        return rideRepository.findByDriver(driver).stream()
+                .map(rideMapper::toRideResponseDto)
+                .collect(Collectors.toList());
+    }
+
 }

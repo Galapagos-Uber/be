@@ -3,7 +3,6 @@ package com.capstone.galapagosUber.web.rest;
 import java.util.List;
 import java.util.UUID;
 
-import com.capstone.galapagosUber.repository.RideRepository;
 import com.openapi.gen.springboot.dto.CreateRideRequestDto;
 import com.openapi.gen.springboot.dto.UpdateRideRequestDto;
 import com.openapi.gen.springboot.dto.RideResponseDto;
@@ -50,4 +49,17 @@ public class RidesApiDelegateImpl implements RidesApiDelegate {
         RideResponseDto rideResponseDto = rideService.updateRide(rideId, updateRideRequestDto);
         return ResponseEntity.ok(rideResponseDto);
     }
+
+    @Override
+    public ResponseEntity<List<RideResponseDto>> ridesRiderIdGet(UUID riderId) {
+        List<RideResponseDto> rideResponseDto = rideService.getRidesByRiderId(riderId);
+        return ResponseEntity.ok(rideResponseDto);
+    }
+
+    @Override
+    public ResponseEntity<List<RideResponseDto>> ridesDriverIdGet(UUID driverId) {
+        List<RideResponseDto> rideResponseDto = rideService.getRidesByDriverId(driverId);
+        return ResponseEntity.ok(rideResponseDto);
+    }
+
 }

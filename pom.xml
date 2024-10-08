@@ -326,9 +326,9 @@
 				<artifactId>flyway-maven-plugin</artifactId>
 				<version>${flyway-core.version}</version>
 				<configuration>
-					<url>jdbc:postgresql://localhost:5432/galapagos_uber</url>
-					<user>postgres</user>
-					<password>Abc123456</password>
+					<url>jdbc:postgresql://central.c5iqkoyc6wn0.us-east-2.rds.amazonaws.com:5432/galapagos_uber</url>
+					<user>Dimness9135</user>
+					<password>2$c%!1*POkRd29rWNLHy</password>
 				</configuration>
 			</plugin>
 			<plugin>

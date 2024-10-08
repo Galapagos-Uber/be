@@ -16,4 +16,9 @@ public interface RideService {
     RideResponseDto getRideById(UUID id);
 
     RideResponseDto updateRide(UUID id, UpdateRideRequestDto updateRideRequestDto);
+
+    List<RideResponseDto> getRidesByRiderId(UUID riderId);
+
+    List<RideResponseDto> getRidesByDriverId(UUID driverId);
+
 }

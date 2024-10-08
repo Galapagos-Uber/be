@@ -328,6 +328,58 @@ paths:
         '204':
           description: Ride deleted
 
+  /rides/rider/{id}:
+    get:
+      summary: Get rides by Rider ID
+      description: Get a list of rides associated with a specific rider.
+      tags:
+        - rides
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the rider to fetch rides for.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A list of rides for the specified rider.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RideResponseDto'
+        '404':
+          description: Rider not found
+
+  /rides/driver/{id}:
+    get:
+      summary: Get rides by Driver ID
+      description: Get a list of rides associated with a specific driver.
+      tags:
+        - rides
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the driver to fetch rides for.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: A list of rides for the specified driver.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RideResponseDto'
+        '404':
+          description: Driver not found
+
   /vehicles:
     get:
       summary: Get a list of vehicles
@@ -757,12 +809,22 @@ components:
         vehicleId:
           type: string
           format: uuid
+        startLocation:
+          type: string
+        endLocation:
+          type: string
         pickupTime:
           type: string
           format: date-time
         dropoffTime:
           type: string
           format: date-time
+        fare:
+          type: number
+          format: float
+        distance:
+          type: number
+          format: float
         status:
           type: string
           enum:
@@ -795,6 +857,9 @@ components:
           type: string
           format: date-time
         fare:
+          type: number
+          format: float
+        distance:
           type: number
           format: float
         status:

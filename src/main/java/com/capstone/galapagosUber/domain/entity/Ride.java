@@ -44,6 +44,8 @@ public class Ride {
 
     private Double fare;
 
+    private Double distance;
+
     @Enumerated(EnumType.STRING)
     private RideStatus status;
 

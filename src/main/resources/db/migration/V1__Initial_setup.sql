@@ -60,6 +60,7 @@ CREATE TABLE IF NOT EXISTS ride (
     pickup_time TIMESTAMP WITHOUT TIME ZONE,
     dropoff_time TIMESTAMP WITHOUT TIME ZONE,
     fare DOUBLE PRECISION,
+    distance DOUBLE PRECISION,
     status ride_status,
     created_date TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
     last_modified_date TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT NOW(),
